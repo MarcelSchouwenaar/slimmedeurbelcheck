@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Bevestig uw goedkeuring - Check met een Goed Gesprek</title>
+    <style>
+        body { font-family: Arial, sans-serif; color: #222; background: #f9f9f9; }
+        .container { background: #fff; max-width: 600px; margin: 30px auto; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);}
+        h1 { color: #00796b; }
+        .button {
+            display: inline-block;
+            margin: 16px 0;
+            padding: 12px 24px;
+            background: #00796b;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .small { font-size: 0.95em; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bevestig jullie Check</h1>
+        <p>Beste <strong>{{name}}</strong>,</p>
+        <p>
+            U heeft samen met uw buur een <strong>slimme deurbel</strong> gecheckt met een goed gesprek.
+            Klik hieronder op de knop om uw goedkeuring te bevestigen, zodat we de check kunnen afronden en de sticker kunnen versturen.
+        </p>
+        <p>
+            <a href="{{confirm_link}}" class="button">Check goedkeuren</a>
+        </p>
+        <p class="small">
+            Of kopieer en plak deze link in uw browser:<br>
+            <a href="{{confirm_link}}">{{confirm_link}}</a>
+        </p>
+        <hr>
+        <p>
+            Bent u het toch niet eens met de check? Klik dan op de onderstaande knop.
+        </p>
+        <p>
+            <a href="{{objection_link}}" class="button" style="background:#c62828;">Check niet goedkeuren</a>
+        </p>
+        <p class="small">
+            Of kopieer en plak deze link in uw browser:<br>
+            <a href="{{objection_link}}">{{objection_link}}</a>
+        </p>
+        <hr>
+        <p class="small">
+            Met vriendelijke groet,<br>
+            Het Team van het Slimme Deurbellen Consortium
+        </p>
+        </div>
+</body>
+</html>
