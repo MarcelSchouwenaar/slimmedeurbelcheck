@@ -87,6 +87,7 @@ if (isset($_GET['neighbor']) && isset($_GET['token'])) {
 }
 
 include 'includes/head.php';
+include 'includes/nav.php';
 ?>
 
 <main>

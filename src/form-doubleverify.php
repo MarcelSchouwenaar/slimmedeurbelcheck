@@ -55,12 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $neighborOneName = $_POST['neighborOneName'];
     $neighborOneEmail = $_POST['neighborOneEmail'];
     $neighborOneFollowUp = isset($_POST['neighborOneFollowUp']) ? 1 : 0;
-    // $neighborTwoName = $_POST['neighborTwoName'];
-    // $neighborTwoEmail = $_POST['neighborTwoEmail'];
-    // $neighborTwoFollowUp = isset($_POST['neighborTwoFollowUp']) ? 1 : 0;
-    $neighborTwoName = "Niet gebruikt"; // <-- Placeholder for neighbor two
-    $neighborTwoEmail = "Niet gebruikt";
-    $neighborTwoFollowUp = 0;
+    $neighborTwoName = $_POST['neighborTwoName'];
+    $neighborTwoEmail = $_POST['neighborTwoEmail'];
+    $neighborTwoFollowUp = isset($_POST['neighborTwoFollowUp']) ? 1 : 0;
     $zipcode = $_POST['zipcode'];
     $street = $_POST['street']; // <-- Added
     $houseNumber = $_POST['houseNumber'];
@@ -99,15 +96,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Build confirmation and objection URLs
     $linkOneConfirm = BASE_URL . "/confirm.php?neighbor=" . urlencode($neighborOneId) . "&token=" . urlencode($tokenOne);
-    // $linkTwoConfirm = BASE_URL . "/confirm.php?neighbor=" . urlencode($neighborTwoId) . "&token=" . urlencode($tokenTwo);
-    // $linkOneObjection = BASE_URL . "/objection.php?neighbor=" . urlencode($neighborOneId) . "&token=" . urlencode($tokenOne);
-    // $linkTwoObjection = BASE_URL . "/objection.php?neighbor=" . urlencode($neighborTwoId) . "&token=" . urlencode($tokenTwo);
+    $linkTwoConfirm = BASE_URL . "/confirm.php?neighbor=" . urlencode($neighborTwoId) . "&token=" . urlencode($tokenTwo);
+    $linkOneObjection = BASE_URL . "/objection.php?neighbor=" . urlencode($neighborOneId) . "&token=" . urlencode($tokenOne);
+    $linkTwoObjection = BASE_URL . "/objection.php?neighbor=" . urlencode($neighborTwoId) . "&token=" . urlencode($tokenTwo);
 
     // Send confirmation mails using mail.php logic
-    confirmation_mail_without_objection($neighborOneEmail, $neighborOneName, $linkOneConfirm);
-    // confirmation_mail($neighborTwoEmail, $neighborTwoName, $linkTwoConfirm, $linkTwoObjection);
+    confirmation_mail($neighborOneEmail, $neighborOneName, $linkOneConfirm, $linkOneObjection);
+    confirmation_mail($neighborTwoEmail, $neighborTwoName, $linkTwoConfirm, $linkTwoObjection);
 
-    $successMsg = "Aanvraag succesvol! U ontvangt een bevestigingsmail.";
+    $successMsg = "Aanmelding succesvol! Uw buren ontvangen een bevestigingsmail.";
 }
 
 ?>
@@ -130,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="check3">Check 3</label>
         </div>
         <div class="form-section">
-            <h2>Waar moet de sticker naar toe?</h2>
+            <h2>Buur 1</h2>
             <div class="form-group">
                 <label for="neighborOneName">Naam<span class="form-field-required">*</span></label>
                 <input type="text" id="neighborOneName" name="neighborOneName" required value="<?php echo $randomNameOne ?>">
@@ -139,17 +136,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="neighborOneEmail">Email<span class="form-field-required">*</span></label>
                 <input type="email" id="neighborOneEmail" name="neighborOneEmail" required value="<?php echo $randomEmailOne ?>">
             </div>
-
-          
-            <div class="form-group">
-                <label for="street">Straat<span class="form-field-required">*</span></label>
-                <input type="text" id="street" name="street" required value="">
-                <!-- <?php echo $randomNumber ?> -->
+            <div class="form-group form-group-checkbox">
+                <label for="neighborOneFollowUp"><input type="checkbox" id="neighborOneFollowUp" name="neighborOneFollowUp">
+                U mag mij later benaderen voor onderzoek.</label>
             </div>
+        </div>
+        <div class="form-section">
+            <h2>Buur 2</h2>
+            <div class="form-group">
+                <label for="neighborTwoName">Naam<span class="form-field-required">*</span></label>
+                <input type="text" id="neighborTwoName" name="neighborTwoName" required value="<?php echo $randomNameTwo ?>">
+            </div>
+            <div class="form-group">
+                <label for="neighborTwoEmail">Email<span class="form-field-required">*</span></label>
+                <input type="email" id="neighborTwoEmail" name="neighborTwoEmail" required value="<?php echo $randomEmailTwo ?>">
+            </div>
+            <div class="form-group form-group-checkbox">
+                <label for="neighborTwoFollowUp"><input type="checkbox" id="neighborTwoFollowUp" name="neighborTwoFollowUp">
+                U mag mij later benaderen voor onderzoek.</label>
+            </div>
+        </div>
+        <div class="form-section">
+            <h2>Waar moet de sticker naar toe?</h2>
             <div class="form-group">
                 <label for="zipcode">Postcode<span class="form-field-required">*</span></label>
                 <input type="text" id="zipcode" name="zipcode" required value="">
                 <!-- <?php echo $randomZip ?> -->
+            </div>
+            <div class="form-group">
+                <label for="street">Straat<span class="form-field-required">*</span></label>
+                <input type="text" id="street" name="street" required value="">
+                <!-- <?php echo $randomNumber ?> -->
             </div>
             <div class="form-group">
                 <label for="houseNumber">Huisnummer<span class="form-field-required">*</span></label>
@@ -161,14 +178,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="addition" name="addition" value="">
             </div>
             
-            <div class="form-group form-group-checkbox">
-                <label for="neighborOneFollowUp"><input type="checkbox" id="neighborOneFollowUp" name="neighborOneFollowUp">
-                U mag mij later benaderen voor onderzoek.</label>
-            </div>
-            
         </div>
         <div class="form-section">
             <h2>Bevestig uw aanvraag</h2>
+            <p>U ontvangt een bevestigingsmail met daarin de details van uw aanvraag en de mogelijkheid om bezwaar te maken.</p>
             <p>Door op <strong>Verzend</strong> te klikken, gaat u akkoord met de verwerking van uw gegevens zoals beschreven in onze <a href="privacy.php">privacyverklaring</a>.</p>
             <button type="submit">Verzend</button>
         </div>

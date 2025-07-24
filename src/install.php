@@ -27,6 +27,7 @@ function setupDatabase($conn) {
         NeighborOneFeedback VARCHAR(255) DEFAULT NULL,
         NeighborTwoFeedback VARCHAR(255) DEFAULT NULL,
         Zipcode VARCHAR(10) NOT NULL,
+        Street VARCHAR(255) NOT NULL,
         HouseNumber VARCHAR(10) NOT NULL,
         Addition VARCHAR(50) DEFAULT NULL,
         FOREIGN KEY (NeighborOneId) REFERENCES Neighbors(Id),

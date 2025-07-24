@@ -23,6 +23,23 @@ function confirmation_mail($to, $name, $confirm_link, $objection_link) {
     mail($to, $subject, $body, $headers);
 }
 
+function confirmation_mail_without_objection($to, $name, $confirm_link) {
+    $subject = "Bevestig jullie Check - Check met een Goed Gesprek";
+    // Load template
+    $template = file_get_contents(__DIR__ . '/../templates/mail0.html');
+    $body = str_replace(
+        ['{{name}}', '{{confirm_link}}'],
+        [htmlspecialchars($name), $confirm_link],
+        $template
+    );
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: Check met een Goed Gesprek <" . SENDER_EMAIL . ">\r\n";
+    $headers .= "Reply-To: " . REPLY_TO_EMAIL . "\r\n";
+    // Send as HTML
+    mail($to, $subject, $body, $headers);
+}
+
 function approval_mail($to, $name) {
     $subject = "Jullie sticker komt eraan! - Check met een Goed Gesprek";
     $template = file_get_contents(__DIR__ . '/../templates/mail3.html');

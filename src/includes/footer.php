@@ -1,11 +1,23 @@
 <?php // footer.php ?>
 <footer>
-    <a href="index.php">Home</a>
-    <a href="about.php">About</a>
-    <a href="contact.php">Contact</a>
-    <a href="privacy.php">Privacy Policy</a>
-    <a href="sitemap.xml">Sitemap</a>
-    <p>&copy; <?php echo date('Y'); ?> Doe de Check</p>
+    <div>
+        <p>&copy; <?php echo date('Y'); ?> Doe de Check</p>
+
+    </div>
+    <div>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">Over</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <li><a href="privacy.php">Privacybeleid</a></li>
+        </ul>
+    </div>
+    <div>
+        <p>Dit is een iniatief van het <a href="https://responsiblesensinglab.org/nl/projecten/slimme-deurbellen-consortium" target="_blank">Consortium Slimme Deurbellen</a>
+        </p>
+</div>
+
+   
 
 </footer>
 </body>
