@@ -12,6 +12,7 @@
             --background-color: #E3ECF2;
             --primary-color: #024736;
             --secondary-color: #0FA45D;
+            --secondary-light-color:rgb(231, 255, 244);
             --accent-color: #D7F11A;
             --text-color: #08263B;
             --link-color: #F2700D;
@@ -24,6 +25,9 @@
         html, body {
             margin: 0px;
             padding: 0;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            scroll-margin-top: 120px;
         }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Adwaita Sans, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif; 
@@ -35,8 +39,6 @@
             padding: 0;
             margin: 20px;
             min-height: 100vh;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
         }
         h1, h2, h3 {
             color: var(--primary-color);
@@ -99,6 +101,7 @@
             margin: 20px auto;
             padding: 10px;  
             border-radius: 100px;
+            z-index: 999;
         }
         .hamburger {
             display: none;
@@ -145,6 +148,11 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
+        }
+        aside{
+            position: sticky;
+            top: 120px;
+            z-index: 2;
         }
         .title{
             font-size: 4em;
@@ -283,6 +291,66 @@
             gap: 20px;
             padding: 0;
         }
+        .col3{
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            padding: 0;
+            align-items: start;
+        }
+        .check-form{
+        }
+        .check-form-aside{
+            height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .check-form-aside h1{
+            font-size: 2.5em;
+            line-height: 1em;
+            margin-bottom: 20px;
+        }
+        .check-form-progress{
+            width: 100%;
+        }
+        .check-form-progress ul{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .check-form-progress li{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: all 0.3s ease;
+        }
+        .check-form-progress li:before{
+            content: "";
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            background-color: white;
+            margin-right: 10px;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+        .check-form-progress li.checked:before{
+            background-color: var(--secondary-color);
+        }
+        .active{
+            font-weight: bold;
+            opacity: 1;
+        }
+        .checked{
+            color: var(--secondary-color);
+            font-weight: bold;
+            opacity: 1;
+        }
         .card{
             display: flex;
             flex-direction: column;
@@ -389,10 +457,13 @@
             flex-direction: column;
             justify-content: flex-start;
         }
-        .form-group-checkbox input[type="checkbox"] {
+        .form-group input[type="checkbox"],
+        .form-group input[type="radio"] {  
             display: inline-block;
-            margin-right: 10px;
+            margin-right: 20px;
         }
+
+
 
         .form-group label {
             text-align: left;
@@ -418,6 +489,82 @@
         .form-field-required {
             color: var(--link-color);
             margin-left: 5px;
+        }
+
+        .form-card{
+            max-width: 640px;
+            scroll-margin-top: 140px; /* Adjust to match or exceed your nav height + desired gap */
+
+            width: 100%;
+            margin: 0 auto 40px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .animation {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            position: relative;
+        }
+
+
+        .form-card label:has(input[type="radio"]){
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            font-weight: bold;
+            /* border: 1px solid var(--text-color); */
+            background-color: var(--background-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .form-card label:has(input[type="radio"]):before{
+            content: "";
+            display: inline-block;
+            max-width: 30px;
+            max-height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 4px solid white;
+            transition: all 0.3s ease;
+
+        }
+        .form-card input[type="radio"]{
+            display: none;
+        }
+        .form-card label:has(input[type="radio"]:checked) {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .form-card label:has(input[type="radio"]:checked):before {
+            background-color: var(--primary-color);
+        }
+
+        .form-card-header{
+            background-color: var(--primary-color);
+            color: white;
+            aspect-ratio: 1/1;
+            position: relative;
+                        
+        }
+        .form-card-body{
+            padding: 20px 20px 0;
+        }
+        .form-card-input{
+            padding: 20px 20px 0;
+        }
+        .form-card-footer{
+            padding: 20px;
+            background-color: var(--secondary-light-color);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         button[type="submit"] {

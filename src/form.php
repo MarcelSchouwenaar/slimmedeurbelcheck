@@ -5,6 +5,7 @@
 require_once 'includes/db.php';
 require_once 'includes/env.php';
 require_once 'includes/mail.php';
+require_once 'includes/animations.php';
 
 // --- Random data for development/demo ---
 function randomName() {
@@ -113,67 +114,226 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <?php include 'includes/head.php'; ?>
 <?php include 'includes/nav.php'; ?>
-<main>
-    <?php if (isset($successMsg)) echo "<p>$successMsg</p>"; ?>
-    <?php if (isset($errorMsg)) echo "<p>$errorMsg</p>"; ?>
-    <article>
-        <h1>Check met een Goed Gesprek</h1>
-        <p class="lead">Zijn jullie er klaar voor?</p>
-    </article>
-    <form method="post" action="POST">
-        <div class="form-group">
-            <input type="radio" id="check1" name="applicationData" value="Check 1" required>
-            <label for="check1">Check 1</label>
-            <input type="radio" id="check2" name="applicationData" value="Check 2">
-            <label for="check2">Check 2</label>
-            <input type="radio" id="check3" name="applicationData" value="Check 3">
-            <label for="check3">Check 3</label>
-        </div>
-        <div class="form-section">
-            <h2>Waar moet de sticker naar toe?</h2>
-            <div class="form-group">
-                <label for="neighborOneName">Naam<span class="form-field-required">*</span></label>
-                <input type="text" id="neighborOneName" name="neighborOneName" required value="<?php echo $randomNameOne ?>">
-            </div>
-            <div class="form-group">
-                <label for="neighborOneEmail">Email<span class="form-field-required">*</span></label>
-                <input type="email" id="neighborOneEmail" name="neighborOneEmail" required value="<?php echo $randomEmailOne ?>">
-            </div>
+<?php 
+    if (isset($successMsg) || isset($errorMsg)) {
+        echo "<main>";
 
-          
-            <div class="form-group">
-                <label for="street">Straat<span class="form-field-required">*</span></label>
-                <input type="text" id="street" name="street" required value="">
-                <!-- <?php echo $randomNumber ?> -->
-            </div>
-            <div class="form-group">
-                <label for="zipcode">Postcode<span class="form-field-required">*</span></label>
-                <input type="text" id="zipcode" name="zipcode" required value="">
-                <!-- <?php echo $randomZip ?> -->
-            </div>
-            <div class="form-group">
-                <label for="houseNumber">Huisnummer<span class="form-field-required">*</span></label>
-                <input type="text" id="houseNumber" name="houseNumber" required value="">
-                <!-- <?php echo $randomNumber ?> -->
-            </div>
-            <div class="form-group">
-                <label for="addition">Toevoeging</label>
-                <input type="text" id="addition" name="addition" value="">
-            </div>
-            
-            <div class="form-group form-group-checkbox">
-                <label for="neighborOneFollowUp"><input type="checkbox" id="neighborOneFollowUp" name="neighborOneFollowUp">
-                U mag mij later benaderen voor onderzoek.</label>
-            </div>
-            
+        if (isset($successMsg)) {
+            echo "<div class='notification success'>" . htmlspecialchars($successMsg) . "</div>";
+        }
+        if (isset($errorMsg)) {
+            echo "<div class='notification error'>" . htmlspecialchars($errorMsg) . "</div>";
+        }
+        echo "</main>";
+        include 'includes/footer.php';
+        
+        exit();
+    } 
+?>
+<main class="col3 check-form">
+    <aside class="check-form-aside">
+        <div>
+            <h1>Check met een Goed Gesprek</h1>
+            <p class="">Sta je klaar met je buur?</p>
         </div>
-        <div class="form-section">
-            <h2>Bevestig uw aanvraag</h2>
-            <p>Door op <strong>Verzend</strong> te klikken, gaat u akkoord met de verwerking van uw gegevens zoals beschreven in onze <a href="privacy.php">privacyverklaring</a>.</p>
-            <button type="submit">Verzend</button>
+        <div class="check-form-progress">
+            <ul>
+                <li class="check-form-progress-item active">Buren buiten beeld</li>
+                <li class="check-form-progress-item">Voorbijgangers</li>        
+                <li class="check-form-progress-item">Focus op eigen terrein</li>        
+                <li class="check-form-progress-item">Buren zijn akkoord</li>        
+                <li class="check-form-progress-item">Contactgegevens</li>        
+        </div>
+    </aside>
+    <form method="post" action="">
+        <div class="form-card animate" id="step1">
+            <div class="form-card-header">
+                <?php echo get_animation(1); ?>
+            </div>
+            <div class ="form-card-body">
+                <p>Staat de bel niet gericht op huizen of tuinen van buren?</p>
+            </div>
+            <div class="form-card-input">
+                <div class="form-group">
+                    <label for="applicationDataStepOneYes">
+                        <input type="radio" id="applicationDataStepOneYes" name="applicationDataStepOne" value="Ja" required>
+                        Ja, huizen en tuinen van buren zijn niet in beeld.
+                    </label>
+                    <label for="applicationDataStepOneNoBut">
+                        <input type="radio" id="applicationDataStepOneNoBut" name="applicationDataStepOne" value="NeeMaar">
+                        Nee, maar de buren hebben geen bezwaren
+                    </label>
+                    <label for="applicationDataStepOneNo">
+                        <input type="radio" id="applicationDataStepOneNo" name="applicationDataStepOne" value="Nee">Nee
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-card" id="step2">
+            <div class="form-card-header">
+                 <?php echo get_animation(2); ?>
+            </div>
+            <div class ="form-card-body">
+                <p>Zijn voorbijgangers zo min mogelijk in beeld? Of staan de privacyinstellingen van de bel aan?</p>
+            </div>
+            <div class="form-card-input">
+                <div class="form-group">
+                    <label for="applicationDataStepTwoYes">
+                        <input type="radio" id="applicationDataStepTwoYes" name="applicationDataStepTwo" value="Ja" required>
+                        Ja, voorbijgangers zijn niet in beeld.
+                    </label>
+                    <label for="applicationDataStepTwoNo">
+                        <input type="radio" id="applicationDataStepTwoNo" name="applicationDataStepTwo" value="Nee">
+                        Nee
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-card" id="step3">
+            <div class="form-card-header">
+                <?php echo get_animation(3); ?>
+            </div>
+            <div class ="form-card-body">
+                <p>Zijn alleen het eigen huis en de tuin in beeld? Of bezittingen op de stoep?</p>
+            </div>
+            <div class="form-card-input">
+                <div class="form-group">
+                    <label for="applicationDataStepThreeYes">
+                        <input type="radio" id="applicationDataStepThreeYes" name="applicationDataStepThree" value="Ja" required>
+                        Ja, alleen het eigen huis en de tuin en bezittingen zijn in beeld.
+                    </label>
+                    <label for="applicationDataStepThreeNo">
+                        <input type="radio" id="applicationDataStepThreeNo" name="applicationDataStepThree" value="Nee">
+                        Nee
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-card" id="step4">
+            <div class="form-card-header">
+                <?php echo get_animation(4); ?>
+            </div>
+            <div class ="form-card-body">
+                <p>Is uw buur tevreden met de instellingen van de bel?</p>
+            </div>
+            <div class="form-card-input">
+                <div class="form-group">
+                    <label for="applicationDataStepFourYes">
+                        <input type="radio" id="applicationDataStepFourYes" name="applicationDataStepFour" value="Ja" required>
+                        Ja, de buur is tevreden met de instellingen van de bel.
+                    </label>
+                    <label for="applicationDataStepFourNo">
+                        <input type="radio" id="applicationDataStepFourNo" name="applicationDataStepFour" value="Nee">
+                        Nee
+                    </label>
+                </div>
+            </div>
+        </div>  
+        <div class="form-card" id="step5">
+            <div class="form-card-input">
+                <h2>Waar moet de sticker naar toe?</h2>
+                <div class="form-group">
+                    <label for="neighborOneName">Naam<span class="form-field-required">*</span></label>
+                    <input type="text" id="neighborOneName" name="neighborOneName" required value="<?php echo $randomNameOne ?>">
+                </div>
+                <div class="form-group">
+                    <label for="neighborOneEmail">Email<span class="form-field-required">*</span></label>
+                    <input type="email" id="neighborOneEmail" name="neighborOneEmail" required value="<?php echo $randomEmailOne ?>">
+                </div>
+
+            
+                <div class="form-group">
+                    <label for="street">Straat<span class="form-field-required">*</span></label>
+                    <input type="text" id="street" name="street" required value="">
+                    <!-- <?php echo $randomNumber ?> -->
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">Postcode<span class="form-field-required">*</span></label>
+                    <input type="text" id="zipcode" name="zipcode" required value="">
+                    <!-- <?php echo $randomZip ?> -->
+                </div>
+                <div class="form-group">
+                    <label for="houseNumber">Huisnummer<span class="form-field-required">*</span></label>
+                    <input type="text" id="houseNumber" name="houseNumber" required value="">
+                    <!-- <?php echo $randomNumber ?> -->
+                </div>
+                <div class="form-group">
+                    <label for="addition">Toevoeging</label>
+                    <input type="text" id="addition" name="addition" value="">
+                </div>
+                
+                <div class="form-group form-group-checkbox">
+                    <label for="neighborOneFollowUp"><input type="checkbox" id="neighborOneFollowUp" name="neighborOneFollowUp">
+                    U mag mij later benaderen voor onderzoek.</label>
+                </div>
+            </div>
+            <div class="form-card-footer">
+                <p>Door op <strong>Verzend</strong> te klikken, gaat u akkoord met de verwerking van uw gegevens zoals beschreven in onze <a href="privacy.php">privacyverklaring</a>.</p>
+                <input type="hidden" name="applicationData">
+                <button type="submit">Verzend</button>
+            </div>
         </div>
         
     </form>
 </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing code for ApplicationData
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        // Collect values
+        const hiddenInput = form.querySelector('input[name="applicationData"]');
+        const data = {
+            applicationDataStepOne: form.querySelector('[name="applicationDataStepOne"]:checked')?.value || "",
+            applicationDataStepTwo: form.querySelector('[name="applicationDataStepTwo"]:checked')?.value || "",
+            applicationDataStepThree: form.querySelector('[name="applicationDataStepThree"]:checked')?.value || "",
+            applicationDataStepFour: form.querySelector('[name="applicationDataStepFour"]:checked')?.value || ""
+        };
+        hiddenInput.value = JSON.stringify(data);
+    });
+
+    // Smooth scroll to next card-spacer on radio change
+    const cards = Array.from(document.querySelectorAll('.form-card'));
+    const progressListItem = document.querySelectorAll('.check-form-progress li');
+
+    const cardsToAnimate = document.querySelectorAll('.form-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle('animate', entry.isIntersecting);
+        });
+    }, {threshold: ".25"});
+    cardsToAnimate.forEach(card => observer.observe(card));
+
+    cards.forEach((card, idx) => {
+        const radios = card.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            function scrollToStep(id) {
+                setTimeout(() => {
+                    location.hash = '#' + id;
+                }, 200);
+            }
+            radio.addEventListener('change', function() {
+                // Scroll to the next spacer (not the next card)
+                const nextStep = cards[idx + 1];
+                
+                progressListItem[idx].classList.remove('active');
+                progressListItem[idx].classList.add('checked');
+                progressListItem[idx + 1].classList.add('active');
+                
+                if (nextStep) {
+                    cards[idx + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    const stepFive = document.getElementById('step5');
+                    if (stepFive) {
+                        cards[4].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }   
+                }
+            });
+        });
+    });
+});
+</script>
 <?php include 'includes/footer.php'; ?>
