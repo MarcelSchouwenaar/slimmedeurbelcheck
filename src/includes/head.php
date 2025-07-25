@@ -592,6 +592,18 @@
 
 
         @media screen and (max-width: 768px) {
+            h2{
+                font-size: 1.2em;
+                line-height: 1em;
+            }
+            .btn{
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+            .btn-lg{
+                line-height: 1em;
+                padding: 20px 50px;
+            }
             nav ul{
                 display: none;
 
@@ -599,26 +611,58 @@
             nav .hamburger {
                 display: flex;
             }
+            article{
+                padding: 0px;
+            }
+            article h1{
+                font-size: 2.5em;
+                margin: 20px 0;
+            }
+            article .lead{
+                font-size: 1.2em;
+                margin: 0 auto 40px;
+                padding: 0;
+            }
             .col2{
                 grid-template-columns: 1fr;
             }
+            .col3{
+                grid-template-columns: 1fr;
+            }
+            aside, .check-form-aside{
+                height: auto;
+                position: relative;
+                top: 0;
+            }
+            .check-form-progress{
+                display: none;
+             }
+              .check-form{
+                z-index: 998;
+              }
             .hero{
                 flex-direction: column;
-                aspect-ratio: 2/1;
+                aspect-ratio: 3/1;
             }
             .title{
                 font-size: 2.5em;
                 margin: 40px;
             }
             .hero-image{
-                width: 100%;
-                aspect-ratio: 1/1;
-                margin-top: -80px;
+                width: 80%;
+                max-height: 300px;
+
+                aspect-ratio: 2/1;
+                margin-top: -50px;
                 margin-bottom: -80px;
             }
             .hero-text{
-                margin-top: -80px;
+                margin-top: -60px;
                 width: 100%;
+            }
+            .hightlight-section{
+                display: flex;
+                flex-direction: column;
             }
             
         }
