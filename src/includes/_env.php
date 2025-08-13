@@ -5,8 +5,8 @@ $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 $dir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 
 define('BASE_URL', $protocol . $host . $dir);
-define('SENDER_EMAIL', 'noreply@marcelschouwenaar.nl');
-define('REPLY_TO_EMAIL', 'info@marcelschouwenaar.nl');
+define('SENDER_EMAIL', '');
+define('REPLY_TO_EMAIL', '');
 
 
 // Detect if running locally
@@ -15,11 +15,11 @@ $isLocal = in_array($host, $localHosts);
 
 // Set DB settings based on environment
 if ($isLocal) {
-    define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', 'root');
-    define('DB_NAME', 'doe_de_check_local');
-    define('DB_PORT', '8889');
+    define('DB_HOST', '');
+    define('DB_USER', '');
+    define('DB_PASS', '');
+    define('DB_NAME', '');
+    define('DB_PORT', '');
 } else {
     define('DB_HOST', 'production-db-host');
     define('DB_USER', 'production-user');

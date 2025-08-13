@@ -297,17 +297,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Smooth scroll to next card-spacer on radio change
     const cards = Array.from(document.querySelectorAll('.form-card'));
+    const defaultDisplayValue = cards[4].style.display;
     const progressListItem = document.querySelectorAll('.check-form-progress li');
-
     const cardsToAnimate = document.querySelectorAll('.form-card');
+
+    cards[cards.length - 1].style.display = 'none';
+
+
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             entry.target.classList.toggle('animate', entry.isIntersecting);
         });
     }, {threshold: ".25"});
+    
     cardsToAnimate.forEach(card => observer.observe(card));
 
     cards.forEach((card, idx) => {
+
         const radios = card.querySelectorAll('input[type="radio"]');
         radios.forEach(radio => {
             function scrollToStep(id) {
@@ -322,6 +328,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 progressListItem[idx].classList.remove('active');
                 progressListItem[idx].classList.add('checked');
                 progressListItem[idx + 1].classList.add('active');
+
+                if(idx == 3){
+                    if(this.value === 'Nee') {
+                        alert("U heeft aangegeven dat de buur niet akkoord is met de instellingen van de bel. Dan kunt u helaas geen sticker aanvragen.");
+                        cards[idx + 1].style.display = 'none';
+                    } else {
+                        cards[idx + 1].style.display = defaultDisplayValue;
+                    }
+                }
                 
                 if (nextStep) {
                     cards[idx + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
