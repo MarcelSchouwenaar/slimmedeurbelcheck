@@ -7,18 +7,23 @@ require_once 'includes/env.php';
 require_once 'includes/mail.php';
 require_once 'includes/animations.php';
 
+echo "<!-- Is Local: " . (IS_LOCAL ? "Yes" : "No") . "\n -->";
+
 // --- Random data for development/demo ---
 function randomName() {
+    if(!IS_LOCAL){ return ""; } // No random data in production
     $first = ['Jan', 'Piet', 'Klaas', 'Marie', 'Sanne', 'Lisa', 'Tom', 'Eva'];
     $last = ['Jansen', 'de Vries', 'Bakker', 'Visser', 'Smit', 'Meijer', 'Mulder', 'Bos'];
     return $first[array_rand($first)] . ' ' . $last[array_rand($last)];
 }
 function randomEmail($name) {
+    if(!IS_LOCAL){ return ""; } // No random data in production
     $domains = ['example.com', 'testmail.nl', 'mailinator.com'];
     $user = strtolower(str_replace(' ', '.', $name));
     return $user . rand(1,99) . '@' . $domains[array_rand($domains)];
 }
 function randomZip() {
+    if(!IS_LOCAL){ return ""; } // No random data in production
     $zips = [3181, 3197, 3198, 3150, 3151, 3190, 3191, 3192, 3193, 3194, 3199, 3195, 3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3011, 3012, 3013, 3014, 3015, 3016, 3021, 3022, 3023, 3024, 3025, 3026, 3027, 3028, 3029, 3031, 3032, 3033, 3034, 3035, 3036, 3037, 3038, 3039, 3041, 3042, 3043, 3044, 3045, 3046, 3047, 3050, 3051, 3052, 3053, 3054, 3055, 3056, 3059, 3061, 3062, 3063, 3064, 3065, 3066, 3067, 3068, 3069, 3071, 3072, 3073, 3074, 3075, 3076, 3077, 3078, 3079, 3081, 3082, 3083, 3084, 3085, 3086, 3087, 3088, 3089, 3196];
     $letters = ['AA', 'AB', 'AC'];
     $zip = $zips[array_rand($zips)];
@@ -26,6 +31,7 @@ function randomZip() {
     return $zip . ' ' . $letter;
 }
 function randomNumber() {
+    if(!IS_LOCAL){ return ""; } // No random data in production
     return rand(1, 5);
 }
 

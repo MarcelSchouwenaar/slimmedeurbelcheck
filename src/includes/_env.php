@@ -12,6 +12,7 @@ define('REPLY_TO_EMAIL', '');
 // Detect if running locally
 $localHosts = ['localhost', '127.0.0.1', '::1', 'localhost:8888', 'localhost:8889'];
 $isLocal = in_array($host, $localHosts);
+define('IS_LOCAL', $isLocal);
 
 // Set DB settings based on environment
 if ($isLocal) {

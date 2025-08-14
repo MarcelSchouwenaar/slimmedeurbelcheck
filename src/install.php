@@ -43,7 +43,7 @@ function setupDatabase($conn) {
 }
 
 // Check if the script is being run in the correct environment
-if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'your-production-domain.com') {
+if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'slimmedeurbelcheck.nl') {
     // Create database connection
     // Use the constants defined in env.php
     echo DB_HOST . ", " . DB_USER . ", " . DB_PASS . ", " . DB_NAME . ", " . DB_PORT;
