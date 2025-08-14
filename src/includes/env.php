@@ -5,8 +5,8 @@ $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 $dir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 
 define('BASE_URL', $protocol . $host . $dir);
-define('SENDER_EMAIL', 'noreply@marcelschouwenaar.nl');
-define('REPLY_TO_EMAIL', 'info@marcelschouwenaar.nl');
+define('SENDER_EMAIL', 'noreply@slimmedeurbelcheck.nl');
+define('REPLY_TO_EMAIL', 'info@slimmedeurbelcheck.nl');
 
 
 // Detect if running locally
@@ -21,10 +21,10 @@ if ($isLocal) {
     define('DB_NAME', 'doe_de_check_local');
     define('DB_PORT', '8889');
 } else {
-    define('DB_HOST', 'production-db-host');
-    define('DB_USER', 'production-user');
-    define('DB_PASS', 'production-password');
-    define('DB_NAME', 'doe_de_check_prod');
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'amsdeurbel_check');
+    define('DB_PASS', 'xFFXuZ6AkmSL3hkCyUBT');
+    define('DB_NAME', 'amsdeurbel_check');
     define('DB_PORT', '3306');
 }
 // Set error reporting based on environment
