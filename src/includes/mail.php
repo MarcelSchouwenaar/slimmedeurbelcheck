@@ -19,8 +19,9 @@ function confirmation_mail($to, $name, $confirm_link, $objection_link) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: Check met een Goed Gesprek <" . SENDER_EMAIL . ">\r\n";
     $headers .= "Reply-To: " . REPLY_TO_EMAIL . "\r\n";
-    // Send as HTML
-    mail($to, $subject, $body, $headers);
+    if (!mail($to, $subject, $body, $headers)) {
+        error_log("Mail sending failed to $to (confirmation_mail)");
+    }
 }
 
 function confirmation_mail_without_objection($to, $name, $confirm_link) {
@@ -36,8 +37,9 @@ function confirmation_mail_without_objection($to, $name, $confirm_link) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: Check met een Goed Gesprek <" . SENDER_EMAIL . ">\r\n";
     $headers .= "Reply-To: " . REPLY_TO_EMAIL . "\r\n";
-    // Send as HTML
-    mail($to, $subject, $body, $headers);
+    if (!mail($to, $subject, $body, $headers)) {
+        error_log("Mail sending failed to $to (confirmation_mail_without_objection)");
+    }
 }
 
 function approval_mail($to, $name) {
@@ -52,7 +54,9 @@ function approval_mail($to, $name) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: Check met een Goed Gesprek <" . SENDER_EMAIL . ">\r\n";
     $headers .= "Reply-To: " . REPLY_TO_EMAIL . "\r\n";
-    mail($to, $subject, $body, $headers);
+    if (!mail($to, $subject, $body, $headers)) {
+        error_log("Mail sending failed to $to (approval_mail)");
+    }
 }
 
 function rejection_mail($to, $name, $feedback = null) {
@@ -72,5 +76,7 @@ function rejection_mail($to, $name, $feedback = null) {
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: Check met een Goed Gesprek <" . SENDER_EMAIL . ">\r\n";
     $headers .= "Reply-To: " . REPLY_TO_EMAIL . "\r\n";
-    mail($to, $subject, $body, $headers);
+    if (!mail($to, $subject, $body, $headers)) {
+        error_log("Mail sending failed to $to (rejection_mail)");
+    }
 }
