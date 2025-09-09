@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Aanvraag kon niet worden verwerkt - Check met een Goed Gesprek</title>
+    <style>
+        body { font-family: Arial, sans-serif; color: #222; background: #f9f9f9; }
+        .container { background: #fff; max-width: 600px; margin: 30px auto; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);}
+        h1 { color: #313131; }
+        .feedback-block {
+            background: #f5f5f5;
+            border-left: 4px solid #c62828;
+            margin: 24px 0;
+            padding: 16px;
+            font-style: italic;
+        }
+        .small { font-size: 0.95em; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Uw aanvraag kon helaas niet worden verwerkt</h1>
+        <p>Beste <strong>{{name}}</strong>,</p>
+        <p>
+            Fijn dat u een Check met een Goed Gesprek heeft gedaan voor uw slimme deurbel. Helaas kan uw aanvraag voor de sticker niet worden afgerond, omdat uw buur toch niet akkoord is.
+        </p>
+        {{#if feedback}}
+        <div class="feedback-block">
+            <strong>Feedback van uw buur:</strong><br>
+            {{feedback}}
+        </div>
+        {{/if}}
+        <p>
+            We begrijpen dat dit teleurstellend kan zijn, maar niet getreurd. U kunt altijd opnieuw een check doen. 
+        </p>
+        <p>
+            Heeft u vragen? Neem gerust contact met ons op.
+        </p>
+       
+        <hr>
+        <p class="small">
+            Met vriendelijke groet,<br>
+            Het Team van het Slimme Deurbellen Consortium
+        </p>
+    </div>
+</body>
+</html>
