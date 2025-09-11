@@ -77,6 +77,18 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     header("Location: index.php");
     exit();
 }
+// --- Handle anonmize ---
+if (isset($_GET['anonimize']) && is_numeric($_GET['anonimize'])) {
+    $id = intval($_GET['anonimize']);
+    $stmt = $conn->prepare("SELECT Zipcode FROM Applications WHERE Id = ?");
+    $stmt->execute([$id]);
+    $zipcode = $stmt->fetchColumn();
+    $newZipcode = substr($zipcode, 0, 4);
+    $stmt = $conn->prepare("UPDATE Applications SET Street = '', HouseNumber = NULL, Addition = '', Zipcode = ? WHERE Id = ?");
+    $stmt->execute([$newZipcode, $id]);
+    header("Location: index.php");
+    exit();
+}
 
 // --- Fetch all applications, newest first ---
 $result = $conn->query("SELECT Id, Street, HouseNumber, Addition, Zipcode, StickerSent FROM Applications ORDER BY Id DESC");
@@ -106,15 +118,21 @@ $result = $conn->query("SELECT Id, Street, HouseNumber, Addition, Zipcode, Stick
         th, td { padding: 10px 8px; border: 1px solid #eee; text-align: left; }
         th { background: #f0f0f0; }
         tr:nth-child(even) { background: #fafafa; }
-        .toggle-btn, .delete-btn { padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; }
+        .toggle-btn, .delete-btn, .anon-btn { padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; }
         .sent { background: #c6f7d0; color: #1a7f37; }
         .notsent { background: #ffe0e0; color: #a00; }
         .delete-btn { background: #f8d7da; color: #a00; margin-left: 8px; }
+        .anon-btn { background: rgba(217, 227, 255, 1); color: rgba(0, 51, 170, 1); margin-left: 8px; }
     </style>
     <script>
         function confirmDelete(id) {
             if (confirm('Weet je zeker dat je deze aanvraag wilt verwijderen?')) {
                 window.location = '?delete=' + id;
+            }
+        }
+        function anonimize(id) {
+            if (confirm('Weet je zeker dat je deze aanvraag wilt anonimiseren?')) {
+                window.location = '?anonimize=' + id;
             }
         }
     </script>
@@ -129,6 +147,7 @@ $result = $conn->query("SELECT Id, Street, HouseNumber, Addition, Zipcode, Stick
             <th>Postcode</th>
             <th>Sticker verstuurd?</th>
             <th>Actie</th>
+            <th>Anonimiseren</th>
             <th>Verwijderen</th>
         </tr>
         <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
@@ -153,6 +172,9 @@ $result = $conn->query("SELECT Id, Street, HouseNumber, Addition, Zipcode, Stick
                 <a href="?toggle=<?php echo $row['Id']; ?>" class="toggle-btn">
                     <?php echo $row['StickerSent'] ? 'Markeer als niet verstuurd' : 'Markeer als verstuurd'; ?>
                 </a>
+            </td>
+            <td>
+                <button type="button" class="anon-btn" onclick="anonimize(<?php echo $row['Id']; ?>)">Anonimiseren</button>
             </td>
             <td>
                 <button type="button" class="delete-btn" onclick="confirmDelete(<?php echo $row['Id']; ?>)">Verwijder</button>

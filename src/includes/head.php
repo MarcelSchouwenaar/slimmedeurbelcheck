@@ -589,6 +589,17 @@
             color: white;
             border-radius: 100px;
         }
+        .captcha{
+            border-radius: 4px;
+        }
+        .captcha-new{
+            float: right;
+            font-size: .8em;
+            color: #333;
+            background-color: #bbb;
+            border-radius: 4px;
+            padding: 4px 6px ;
+        }
 
 
         @media screen and (max-width: 768px) {

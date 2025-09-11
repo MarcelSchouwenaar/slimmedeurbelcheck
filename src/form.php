@@ -1,5 +1,6 @@
 <?php
 // form.php
+session_start();
 
 // Include necessary files
 require_once 'includes/db.php';
@@ -47,6 +48,23 @@ $addition = '';
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
+
+    if (!isset($_SESSION['captcha'])) {
+        $errorMsg = "Captcha is verlopen of niet ingesteld. Probeer het opnieuw.";
+        include 'includes/head.php';
+        include 'includes/nav.php';
+        echo "<main><div class='notification error'>$errorMsg</div></main>";
+        include 'includes/footer.php';
+        exit();
+    }
+    if (!isset($_POST['captcha']) || $_POST['captcha'] != $_SESSION['captcha']) {
+        $errorMsg = "De ingevulde captcha is onjuist. Probeer het opnieuw.";
+        include 'includes/head.php';
+        include 'includes/nav.php';
+        echo "<main><div class='notification error'>$errorMsg</div></main>";
+        include 'includes/footer.php';
+        exit();
+    }
     
     $applicationData = $_POST['applicationData'];
 
@@ -264,9 +282,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" id="zipcode" name="zipcode" required value="">
                     <!-- <?php echo $randomZip ?> -->
                 </div>
-                
+                <div class="form-group">
+                    <label for="captcha">Welke cijfers staan er in dit plaatje?<span class="form-field-required">*</span></label>
+                    <div>
+                        <img class="captcha" src="includes/captcha.php" width="160" height="48">
+                        <span title="Plaatje niet goed leesbaar? Klik hier voor een nieuw plaatje" class="captcha-new">Niet goed leesbaar.</span>
+                    </div>
+                    <input type="text" id="captcha" name="captcha" required value="">
+                </div>
+
                 
             </div>
+
             <div class="form-card-footer">
                 <p>Door op <strong>Verzend</strong> te klikken, gaat u akkoord met de verwerking van uw gegevens zoals beschreven in onze <a href="privacy.php">privacyverklaring</a>.</p>
                 <input type="hidden" name="applicationData">
@@ -281,23 +308,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 document.addEventListener('DOMContentLoaded', function() {
     // Existing code for ApplicationData
     const form = document.querySelector('form');
+    
+    const newCaptcha = form.querySelector('.captcha-new');
+    newCaptcha.addEventListener('click', function() {
+        const captchaImage = form.querySelector('.captcha');
+        captchaImage.src = 'includes/captcha.php?' + Date.now();
+    });
     if (!form) return;
 
     form.addEventListener('submit', function(e) {
-        try {
-            // Collect values
-            const hiddenInput = form.querySelector('input[name="applicationData"]');
-            const data = {
-                applicationDataStepOne: form.querySelector('[name="applicationDataStepOne"]:checked')?.value || "",
-                applicationDataStepTwo: form.querySelector('[name="applicationDataStepTwo"]:checked')?.value || "",
-                applicationDataStepThree: form.querySelector('[name="applicationDataStepThree"]:checked')?.value || "",
-                applicationDataStepFour: form.querySelector('[name="applicationDataStepFour"]:checked')?.value || ""
-            };
-            hiddenInput.value = JSON.stringify(data);
-        } catch (err) {
-            e.preventDefault();
-            alert("Er is een fout opgetreden. Controleer aub of u alle stappen hebt ingevuld.");
-        }
+        e.preventDefault();
+        // Before submitting, validate captcha by sending the value to includes/captcha-check.php via GET
+        const captchaInput = form.querySelector('[name="captcha"]');
+        const captchaValue = encodeURIComponent(captchaInput.value);
+
+        fetch('includes/captcha-check.php?captcha=' + captchaValue, {
+            method: 'GET',
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("data",data);
+            if (data.success) {
+                // If captcha is valid, proceed with form submission
+                const hiddenInput = form.querySelector('input[name="applicationData"]');
+                const dataObj = {
+                    applicationDataStepOne: form.querySelector('[name="applicationDataStepOne"]:checked')?.value || "",
+                    applicationDataStepTwo: form.querySelector('[name="applicationDataStepTwo"]:checked')?.value || "",
+                    applicationDataStepThree: form.querySelector('[name="applicationDataStepThree"]:checked')?.value || "",
+                    applicationDataStepFour: form.querySelector('[name="applicationDataStepFour"]:checked')?.value || ""
+                };
+                hiddenInput.value = JSON.stringify(dataObj);
+                form.submit();
+            } else {
+                alert("Ongeldige code. Probeer het opnieuw.");
+                const captchaImage = form.querySelector('.captcha');
+                captchaImage.src = 'includes/captcha.php?' + Date.now();
+                captchaInput.value = '';
+                captchaInput.focus();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
     });
 
     // Smooth scroll to next card-spacer on radio change
