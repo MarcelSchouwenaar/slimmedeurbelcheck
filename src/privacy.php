@@ -11,12 +11,12 @@ Deze gegevens gebruiken we alleen om de sticker naar je op te sturen.</p>
 <p>Nadat de sticker is verstuurd, worden je gegevens automatisch geanonimiseerd. Alleen een willekeurige code en de eerste vier cijfers van je postcode blijven bewaard. Dat doen we zodat we later kunnen analyseren hoeveel mensen in een bepaald gebied meedoen, zonder dat we nog weten wie je bent.</p>
 
 <h2>Opslag en beveiliging</h2>
-<p>De gegevens worden opgeslagen in een beveiligde database op een server van het AMS Institute.
+<p>De gegevens worden opgeslagen in een beveiligde database op een server onder beheer van  het AMS Institute.
 De gegevens worden niet gedeeld met derden.
 We gebruiken geen externe diensten voor e-mail of verwerking van je gegevens.</p>
 
 <h2>Websitebezoek</h2>
-<p>We meten op een eenvoudige manier hoeveel mensen onze site bezoeken. Dit doen we met SimpleAnalytics, een privacyvriendelijke dienst uit Nederland.
+<p>We meten op een eenvoudige manier hoeveel mensen onze site bezoeken. Dit doen we met <a href="http://simpleanalytics.com" target="_blank">SimpleAnalytics</a>, een privacyvriendelijke dienst uit Nederland.
 SimpleAnalytics gebruikt geen cookies.
 Er worden geen persoonlijke gegevens verzameld.</p>
 
@@ -25,6 +25,18 @@ Er worden geen persoonlijke gegevens verzameld.</p>
 📧 <a href="contact.php"> ons contactformulier.</a></p>
 
 <h2>Vragen?</h2>
-<p>Heb je vragen over deze privacyverklaring of over hoe we met gegevens omgaan? Mail ons gerust.</p>
+<p>Heb je vragen over deze privacyverklaring of over hoe we met gegevens omgaan? 
+<span id="email-link"></span>
+<script>
+    // Spam-safe email rendering
+    (function() {
+        var user = 'info';
+        var domain = 'slimmedeurbelcheck.nl';
+        var gibbon = user + '@' + domain;
+        var link = '<a href="mailto:' + gibb + '">Mail ons gerust.</a>';
+        document.getElementById('email-link').innerHTML = link;
+    })();
+</script>
+</p>
 </main>
 <?php include 'includes/footer.php'; ?>

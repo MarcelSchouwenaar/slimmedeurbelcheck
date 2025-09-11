@@ -264,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" id="zipcode" name="zipcode" required value="">
                     <!-- <?php echo $randomZip ?> -->
                 </div>
-
+                
                 
             </div>
             <div class="form-card-footer">
