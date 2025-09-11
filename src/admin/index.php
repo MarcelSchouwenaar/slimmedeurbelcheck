@@ -84,7 +84,7 @@ if (isset($_GET['anonimize']) && is_numeric($_GET['anonimize'])) {
     $stmt->execute([$id]);
     $zipcode = $stmt->fetchColumn();
     $newZipcode = substr($zipcode, 0, 4);
-    $stmt = $conn->prepare("UPDATE Applications SET Street = '', HouseNumber = NULL, Addition = '', Zipcode = ? WHERE Id = ?");
+    $stmt = $conn->prepare("UPDATE Applications SET Street = '', HouseNumber = 0, Addition = '', Zipcode = ? WHERE Id = ?");
     $stmt->execute([$newZipcode, $id]);
     header("Location: index.php");
     exit();
