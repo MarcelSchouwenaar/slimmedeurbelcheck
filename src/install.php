@@ -55,6 +55,14 @@ if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'slim
         die("Connection failed: " . $conn->connect_error);
     }
 
+    // --- Check if already installed ---
+    $check = $conn->query("SHOW TABLES LIKE 'Applications'");
+    if ($check && $check->num_rows > 0) {
+        echo "<br>Database is already installed. Exiting.";
+        $conn->close();
+        exit();
+    }
+
     // Call the setup function
     setupDatabase($conn);
 
