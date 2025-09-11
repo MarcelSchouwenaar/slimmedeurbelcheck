@@ -1,0 +1,31 @@
+# Sensitive config
+includes/env.php
+
+# Git-ftp and other deployment folders
+../git-ftp/
+../git/
+
+# IDE/editor files
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+*.DS_Store
+.vscode/
+.idea/
+
+# Composer dependencies (if used)
+vendor/
+
+# Node dependencies (if used)
+node_modules/
+
+# Cache and session files
+cache/
+*.cache
+*.session
+
+# Uploaded files (if any)
+uploads/
+files/
