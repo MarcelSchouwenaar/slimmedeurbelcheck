@@ -5,7 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = htmlspecialchars(trim($_POST["message"]));
 
     // Validate input
-    if (!empty($name) && filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($message)) {
+    // if (!empty($name) && filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($message)) {
+    if (false) {
         $to = "info@slimmedeurbelcheck.nl";
         $subject = "Contact Form Submission from " . $name;
         $body = "Name: $name\nEmail: $email\nMessage:\n$message";
